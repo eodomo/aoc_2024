@@ -7,14 +7,12 @@ fn main() -> Result<()> {
     let mut left: Vec<i32> = Vec::new();
     let mut right: Vec<i32> = Vec::new();
 
-    for line in contents.lines() {
-        for (i, val) in line.split_whitespace().enumerate() {
-            let converted: i32 = val.parse::<i32>()?;
-            if i % 2 == 0 {
-                left.push(converted);
-            } else {
-                right.push(converted);
-            }
+    for (i, val) in contents.split_whitespace().enumerate() {
+        let converted: i32 = val.parse::<i32>()?;
+        if i % 2 == 0 {
+            left.push(converted);
+        } else {
+            right.push(converted);
         }
     }
 

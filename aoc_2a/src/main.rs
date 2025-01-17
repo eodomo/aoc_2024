@@ -9,12 +9,14 @@ enum Direction {
 struct Report {
     levels: Vec<i32>,
     direction: Direction,
+    safe: bool,
 }
 impl Report {
     fn new() -> Self {
         Report {
             levels: vec![],
             direction: Direction::Increasing,
+            safe: true,
         }
     }
     fn set_direction(&mut self) {
@@ -35,7 +37,6 @@ impl Report {
         let mut iter = self.levels.iter().peekable();
         for level in iter {
             let next_level = iter.peek();
-            
         }
         true
     }

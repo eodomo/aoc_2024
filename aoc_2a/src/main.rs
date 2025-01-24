@@ -1,11 +1,12 @@
 use anyhow::Result;
 use std::fs;
 
-#[derive(PartialEq, Eq, Clone, Copy)]
+#[derive(PartialEq, Eq, Clone, Copy, Debug)]
 enum Direction {
     Increasing,
     Decreasing,
 }
+#[derive(Debug)]
 struct Report {
     levels: Vec<i32>,
     direction: Option<Direction>,
@@ -45,14 +46,17 @@ impl Report {
 
 /// true means safe, false means unsafe
 fn compare_two_levels(direction: Direction, num0: &i32, num1: &i32) -> bool {
+    if num0 == num1 {
+        return false;
+    }
     if direction == Direction::Increasing {
-        if num0 > num1 {
+        if num0 > num1 || *num1 > num0 + 3 {
             false
         } else {
             true
         }
     } else {
-        if num0 > num1 {
+        if num0 > num1 || *num0 < num1 - 3 {
             true
         } else {
             false
@@ -85,7 +89,8 @@ fn main() -> Result<()> {
     let mut safe_count = 0;
     for report in reports.iter_mut() {
         report.compare_all_values();
-        if report.safe == true {
+        if report.safe {
+            dbg!("{:#}", &report);
             safe_count += 1;
         }
     }

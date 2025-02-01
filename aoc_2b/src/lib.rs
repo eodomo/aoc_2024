@@ -206,4 +206,34 @@ mod tests {
         report.compare_all_values();
         assert_ne!(true, report.safe);
     }
+
+    #[test]
+    fn test_multiple_lines() {
+        let mut reports: Vec<Report> = Vec::new();
+        let line1 = vec![7, 6, 4, 2, 1];
+        let line2 = vec![1, 2, 7, 8, 9];
+        let line3 = vec![9, 7, 6, 2, 1];
+        let line4 = vec![1, 3, 2, 4, 5];
+        let line5 = vec![8, 6, 4, 4, 1];
+        let line6 = vec![1, 3, 6, 7, 9];
+        let lines = vec![line1, line2, line3, line4, line5, line6];
+
+        for line in lines {
+            let mut report = Report::new();
+            for level in line {
+                report.levels.push(level);
+            }
+            reports.push(report);
+        }
+
+        let mut safe_count = 0;
+        for report in reports.iter_mut() {
+            report.compare_all_values();
+            if report.safe {
+                //dbg!("{:#}", &report);
+                safe_count += 1;
+            }
+        }
+        assert_eq!(4, safe_count);
+    }
 }
